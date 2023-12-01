@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Grocery List</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">    
+    <script type="text/javascript" src="{{ url_for('static', filename='js/main.js')}}"></script>
+</head>
+<body>
+    <!-- LOGO -->
+    <div>
+        <img src="https://raw.githubusercontent.com/MariyaSha/groceriesList/main/logo_black.png" alt="grocery app logo">
+    </div>
+
+    <!-- REMOVE ITEMS FORM -->
+    <div id="remove_items">
+        <form action="/remove_item" method="POST">
+            {% for item in shopping_items %}
+                <input type="checkbox" name="check" id="{{item}}" value="{{item}}" onchange="check_me('{{ item }}')">
+                <label for="{{item}}" name="{{item}}">{{item}}</label>
+                <br>
+            {% endfor %}
+            <input type="submit" value="CHECK ITEMS" id="remove_btn">
+        </form>
+    </div>
+
+    <!-- ADD ITEMS FORM -->
+    <div id="add_items">
+        <form action="/add_item" method="POST">
+            <select name="select_items" id="select_items">
+                {% for item in all_items%}
+                    {% if item not in shopping_items %}
+                        <option value="{{item}}">{{item}}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            <input type="submit" value="add_item">
+        </form>
+    </div>
+</body>
+</html>
